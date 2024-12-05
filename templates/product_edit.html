@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product</title>
+</head>
+<body>
+    <h1>Edit Product</h1>
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <div>
+            <label for="product_image">Product Image:</label>
+            {{ form.product_image }}
+        </div>
+        <div>
+            <label for="product_code">Product Code:</label>
+            {{ form.product_code }}
+        </div>
+        <div>
+            <label for="product_name">Product Name:</label>
+            {{ form.product_name }}
+        </div>
+        <div>
+            <label for="product_price">Product Price:</label>
+            {{ form.product_price }}
+        </div>
+        <div>
+            <label for="total">Total:</label>
+            {{ form.total }}
+        </div>
+        <div>
+            <label for="brand">Brand:</label>
+            {{ form.brand }}
+        </div>
+        <div>
+            <label for="category">Category:</label>
+            {{ form.category }}
+        </div>
+        <div>
+            <label for="country">Country:</label>
+            {{ form.country }}
+        </div>
+        <div>
+            <label for="opening_stock">Opening Stock:</label>
+            {{ form.opening_stock }}
+        </div>
+        <div>
+            <label for="closing_stock">Closing Stock:</label>
+            {{ form.closing_stock }}
+        </div>
+        <div>
+            <label for="status">Status:</label>
+            {{ form.status }}
+        </div>
+        <div>
+            <button type="submit">Save</button>
+        </div>
+    </form>
+</body>
+</html>

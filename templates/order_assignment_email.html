@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Assignment</title>
+</head>
+<body>
+    <h2>Order Assignment Details</h2>
+    <p>Dear {{ delivery_partner.user.first_name }},</p>
+    <p>You have been assigned a new order. Here are the details:</p>
+    <h3>Order ID: {{ order.id }}</h3>
+    <p>Customer: {{ order.user.first_name }} {{ order.user.last_name }}</p>
+    <p>Order Date: {{ order.order_date }}</p>
+    <p>Total Amount: &#8377;{{ order.total_amount }}</p>
+    <h4>Items:</h4>
+    <ul>
+        {% for item in order.items.all %}
+        <li>
+            <img src="{{ item.product.product_image.url }}" alt="{{ item.product.product_name }}" width="50">
+            {{ item.product.product_name }} x {{ item.quantity }} = &#8377;{{ item.total_price }}
+        </li>
+        {% endfor %}
+    </ul>
+    <h4>Shipping Information:</h4>
+    <p>Name: {{ order.shippinginfo.first_name }} {{ order.shippinginfo.last_name }}</p>
+    <p>Email: {{ order.shippinginfo.email }}</p>
+    <p>Address: {{ order.shippinginfo.address }}</p>
+    <p>{{ order.shippinginfo.address2 }}</p>
+    <p>{{ order.shippinginfo.city }}, {{ order.shippinginfo.state }}, {{ order.shippinginfo.zip_code }}</p>
+    <p>Country: {{ order.shippinginfo.country }}</p>
+    <p>Thank you!</p>
+</body>
+</html>

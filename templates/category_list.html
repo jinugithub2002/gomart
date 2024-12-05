@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+{%load static%}
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- FontAwesome for Icons -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
+      crossorigin="anonymous"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+
+      body {
+        display: flex;
+        height: 100vh;
+      }
+
+      .dashboard-container {
+        display: flex;
+        width: 100%;
+      }
+
+      .sidebar {
+        width: 250px;
+        background-color: #343a40;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+
+      .sidebar-header {
+        padding: 20px;
+        text-align: center;
+        background-color: #007bff;
+      }
+
+      .sidebar-menu {
+        list-style-type: none;
+        padding: 0;
+      }
+
+      .sidebar-menu li {
+        padding: 15px 20px;
+      }
+
+      .sidebar-menu li a {
+        color: white;
+        text-decoration: none;
+      }
+
+      .sidebar-menu li:hover {
+        background-color: #007bff;
+      }
+
+      .main-content {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .topbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+      }
+
+      .topbar h1 {
+        margin: 0;
+      }
+
+      .user-info {
+        display: flex;
+        align-items: center;
+      }
+
+      .user-info p {
+        margin: 0 10px 0 0;
+      }
+
+      .content {
+        padding: 20px;
+        flex: 1;
+        background-color: #e9ecef;
+      }
+
+      .cards {
+        display: flex;
+        gap: 20px;
+      }
+
+      .card {
+        flex: 1;
+        padding: 20px;
+        background-color: white;
+        border-radius: 5px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        margin: 5px;
+      }
+
+      .card h3 {
+        margin-bottom: 10px;
+      }
+
+      .card p {
+        margin: 0;
+      }
+
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        font-family: Arial, sans-serif;
+      }
+
+      th,
+      td {
+        padding: 10px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+
+      th {
+        background-color: #f2f2f2;
+      }
+
+      tr:hover {
+        background-color: #f5f5f5;
+      }
+
+      a {
+        color: #007bff;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+
+      a:hover {
+        color: #0056b3;
+      }
+      .dropbtn {
+        background-color: #04aa6d;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+      }
+
+      .dropbtn:hover,
+      .dropbtn:focus {
+        background-color: #3e8e41;
+      }
+
+      .dropdown {
+        float: right;
+        position: relative;
+        display: inline-block;
+      }
+
+      .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        min-width: 160px;
+        overflow: auto;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        right: 0;
+        z-index: 1;
+      }
+
+      .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+      }
+
+      .dropdown a:hover {
+        background-color: #ddd;
+      }
+
+      .show {
+        display: block;
+      }
+      .icon-button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 50px;
+        height: 50px;
+        color: #333333;
+        background: #dddddd;
+        border: none;
+        outline: none;
+        border-radius: 50%;
+      }
+
+      .icon-button:hover {
+        cursor: pointer;
+      }
+
+      .icon-button:active {
+        background: #cccccc;
+      }
+
+      .icon-button__badge {
+        position: absolute;
+        top: -10px;
+        right: -10px;
+        width: 25px;
+        height: 25px;
+        background: red;
+        color: #ffffff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 50%;
+      }
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, sans-serif;
+      }
+      body {
+        display: flex;
+        height: 100vh;
+      }
+      .dashboard-container {
+        display: flex;
+        width: 100%;
+      }
+      .sidebar {
+        width: 250px;
+        background-color: #343a40;
+        color: white;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+      }
+      .sidebar-header {
+        padding: 20px;
+        text-align: center;
+        background-color: #007bff;
+      }
+      .sidebar-menu {
+        list-style-type: none;
+        padding: 0;
+      }
+      .sidebar-menu li {
+        position: relative;
+        padding: 10px 20px;
+      }
+      .sidebar-menu li a {
+        color: white;
+        text-decoration: none;
+      }
+      .sidebar-menu li:hover {
+        background-color: #007bff;
+      }
+      .sidebar-menu .dropdown-menu {
+        display: none;
+        position: absolute;
+        left: 250px;
+        top: 0;
+        background-color: #343a40;
+        min-width: 200px;
+        z-index: 1000;
+        border: 1px solid #dee2e6;
+      }
+      .sidebar-menu .dropdown-menu a {
+        color: white;
+      }
+      .sidebar-menu li:hover .dropdown-menu {
+        display: block;
+      }
+    </style>
+
+    <title>Category List</title>
+</head>
+<body>
+    <div class="dashboard-container">
+        <nav class="sidebar">
+            <div class="sidebar-header" style="background-color: green !important;">
+                <h2>
+                    <img src="{% static 'img/Admin_logo.png' %}" alt="logo" width="140" height="60" />
+                </h2>
+            </div>
+            <ul class="sidebar-menu">
+                <li><a href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+              <li>
+                <a href="#"><i class="fas fa-box"></i> Product Management
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="{% url 'country_list' %}">Country</a></li>
+                  <li><a href="{% url 'brand_list' %}">Brands</a></li>
+                  <li><a href="{% url 'category_list' %}">Category</a></li>
+                  <li><a href="#">Products</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-shopping-cart"></i> Order Management
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Pending Orders</a></li>
+                  <li><a href="#">Cancelled Orders</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-shipping-fast"></i> Shipping Management
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Out For Delivery</a></li>
+                  <li><a href="#">Complete Delivery</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-truck"></i> Delivery Partner
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Details</a></li>
+                  <li><a href="#">Log in/out info</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-tags"></i> Daily & Weekly Deals
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Deals</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-image"></i> Posters
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Poster 1</a></li>
+                  <li><a href="#">Poster 2</a></li>
+                  <li><a href="#">Poster 3</a></li>
+                  <li><a href="#">Poster 4</a></li>
+                  <li><a href="#">Poster 5</a></li>
+                  <li><a href="#">Poster 6</a></li>
+                  <li><a href="#">Poster 7</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-comment-alt"></i> Feedbacks
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Product  Feedback</a></li>
+                  <li><a href="#">Site  Feedback</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-question-circle"></i> Enquiry
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#"> Enquires</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-envelope"></i> Subscriptions
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Add Subscription</a></li>
+                  <li><a href="#">View Subscriptions</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-user-check"></i> Registered Customers
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Add Customer</a></li>
+                  <li><a href="#">View Customers</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href="#"><i class="fas fa-database"></i> Backup Data & Media
+                    <i class="fas fa-chevron-right float-right"></i>
+                </a>            
+                <ul class="dropdown-menu">
+                  <li><a href="#">Backup Now</a></li>
+                  <li><a href="#">View Backups</a></li>
+                </ul>
+              </li>
+            </ul>
+          </nav>
+          <div class="main-content">
+        </nav>
+        <div class="main-content">
+            <header class="topbar" style="background-color: green !important;">
+                <h1>Dashboard</h1>
+                <div class="user-info">
+                    <p>
+                        <button type="button" class="icon-button">
+                            <span class="material-icons">notifications</span>
+                            <span class="icon-button__badge">3</span>
+                        </button>
+                    </p>
+                    <div class="dropdown">
+                        <button onclick="myFunction()" class="dropbtn">
+                            <i class="fas fa-user"> Admin</i>
+                        </button>
+                        <div id="myDropdown" class="dropdown-content">
+                            <a href="#home">Change Password</a>
+                            <a href="#about">View Site</a>
+                            <a href="#contact">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="container mt-5">
+                <h1 class="mb-4">Category List</h1>
+                <div class="d-flex justify-content-end mb-3">
+                    <a href="{% url 'category_add' %}" class="btn btn-primary btn-lg">
+                        <i class="fas fa-plus-circle"></i> Add Category
+                    </a>
+                </div>
+                <table class="table table-striped table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th scope="col">Image</th>
+                            <th scope="col">Category Name</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for category in categories %}
+                        <tr>
+                            <td><img src="{{ category.image.url }}" alt="{{ category.category_name }}" class="img-thumbnail" width="50" height="50"></td>
+                            <td>{{ category.category_name }}</td>
+                            <td>{{ category.status|yesno:"Active,Inactive" }}</td>
+                            <td>
+                                <a href="{% url 'category_edit' category.pk %}" class="btn btn-warning btn-sm">Edit</a>
+                                <a href="{% url 'category_delete' category.pk %}" class="btn btn-danger btn-sm">Delete</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle with Popper -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+</body>
+</html>

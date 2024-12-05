@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <title>All Products</title>
+    <style>
+        .brand-sidebar {
+            position: -webkit-sticky; /* For Safari */
+            position: sticky;
+            top: 0;
+            max-height: 100vh;
+            overflow-y: auto;
+        }
+        .product-card {
+            margin-bottom: 20px;
+        }
+        .product-card img {
+            height: 200px;
+            object-fit: cover;
+        }
+        .search-results {
+            position: absolute;
+            z-index: 1000;
+            background: white;
+            border: 1px solid #ddd;
+            width: 100%;
+            max-height: 300px;
+            overflow-y: auto;
+            display: none;
+        }
+        .search-results img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        .search-results div {
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+        }
+        .search-results div:hover {
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        .brand-sidebar a {
+            color: #007bff;
+            text-decoration: none;
+            padding: 5px 0;
+            display: block;
+        }
+        .brand-sidebar a:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-light bg-white navbar-expand-xl">
+        <a href="index.html" class="navbar-brand">
+            <h1 class="text-primary display-6">
+                <img src="{% static 'img/gomartlogo.png' %}" width="160px" alt="GoMart Logo">
+            </h1>
+        </a>
+        <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+            <span class="fa fa-bars text-primary"></span>
+        </button>
+        <div class="collapse navbar-collapse bg-white" id="navbarCollapse">
+            <div class="navbar-nav mx-auto">
+                <a href="{% url 'index' %}" class="nav-item nav-link active">Home</a>
+                <a href="{% url 'shop' %}" class="nav-item nav-link">Shop</a>
+                <a href="{% url 'all_products' %}" class="nav-item nav-link">All Products</a>
+                <a href="{% url 'shop_detail' %}" class="nav-item nav-link">Shop Detail</a>
+                <div class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">Pages</a>
+                    <div class="dropdown-menu m-0 bg-secondary rounded-0">
+                        <a href="" class="dropdown-item">Cart</a>
+                        <a href="" class="dropdown-item">Checkout</a>
+                        <a href="" class="dropdown-item">Testimonial</a>
+                        <a href="" class="dropdown-item">404 Page</a>
+                    </div>
+                </div>
+                <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+            </div>  
+        </div>
+    </nav>
+    <div class="d-flex">
+        <nav class="brand-sidebar p-3 bg-light">
+            <h5>Brands</h5>
+            <ul class="list-unstyled">
+                {% for brand in brands %}
+                <li>
+                    <a href="#" class="d-block" style="color: #007bff; text-decoration: none; padding: 5px 0; display: block;">
+                        {{ brand.brand_name }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+        </nav>
+        <div class="container mt-5">
+            <h1 class="mb-4">All Products</h1>
+            <div class="d-flex justify-content-between mb-3">
+                <div class="position-relative w-100 sticky-search">
+                    <input type="text" id="search" class="form-control" placeholder="Search for products...">
+                    <div class="search-results" id="search-results"></div>
+                </div>
+            </div>
+            <div class="row">
+                {% for product in products %}
+                <div class="col-md-4">
+                    <div class="card product-card">
+                        <img src="{{ product.product_image.url }}" class="card-img-top" alt="{{ product.product_name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ product.product_name }}</h5>
+                            <p class="fw-light">{{ product.category.category_name }}</p>
+                            <p class="card-text">Price: &#8377;{{ product.product_price }}</p>
+                            <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script>
+        $(document).ready(function() {
+            $('#search').on('input', function() {
+                var query = $(this).val();
+                if (query.length > 0) {
+                    $.ajax({
+                        url: '{% url "product_search" %}',
+                        method: 'GET',
+                        data: {
+                            'q': query
+                        },
+                        success: function(data) {
+                            $('#search-results').html('');
+                            if (data.length > 0) {
+                                data.forEach(function(product) {
+                                    $('#search-results').append(`
+                                        <div>
+                                            <img src="${product.product_image}" alt="${product.product_name}">
+                                            <span>${product.product_name}</span>
+                                        </div>
+                                    `);
+                                });
+                                $('#search-results').show();
+                            } else {
+                                $('#search-results').hide();
+                            }
+                        }
+                    });
+                } else {
+                    $('#search-results').hide();
+                }
+            });
+
+            $(document).on('click', function(event) {
+                if (!$(event.target).closest('#search').length && !$(event.target).closest('#search-results').length) {
+                    $('#search-results').hide();
+                }
+            });
+
+            $(document).on('click', '.search-results div', function() {
+                $('#search').val($(this).text());
+                $('#search-results').hide();
+            });
+        });
+    </script>
+</body>
+</html>

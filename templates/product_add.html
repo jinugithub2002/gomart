@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <title>Add Product</title>
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4 text-center">Add Product</h1>
+        <form method="post" enctype="multipart/form-data" class="row g-3">
+            {% csrf_token %}
+            <div class="col-md-6">
+                <label for="id_product_image" class="form-label">Product Image:</label>
+                {{ form.product_image }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_product_code" class="form-label">Product Code:</label>
+                {{ form.product_code }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_product_name" class="form-label">Product Name:</label>
+                {{ form.product_name }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_product_price" class="form-label">Product Price:</label>
+                {{ form.product_price }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_total" class="form-label">Total:</label>
+                {{ form.total }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_brand" class="form-label">Brand:</label>
+                {{ form.brand }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_category" class="form-label">Category:</label>
+                {{ form.category }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_country" class="form-label">Country:</label>
+                {{ form.country }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_opening_stock" class="form-label">Opening Stock:</label>
+                {{ form.opening_stock }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_closing_stock" class="form-label">Closing Stock:</label>
+                {{ form.closing_stock }}
+            </div>
+            <div class="col-md-6">
+                <label for="id_status" class="form-label">Status:</label>
+                {{ form.status }}
+            </div>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary">Save</button>
+            </div>
+        </form>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
